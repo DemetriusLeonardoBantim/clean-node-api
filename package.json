@@ -4,18 +4,23 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@types/node": "^20.12.12",
-    "git-commit-msg-linter": "^5.0.8",
-    "typescript": "^5.4.5",
     "@rocketseat/eslint-config": "2.1.0",
+    "@types/node": "^20.12.12",
     "eslint": "8.54.0",
+    "eslint_d": "13.1.1",
     "eslint-plugin-drizzle": "^0.2.1",
-    "eslint_d": "13.1.1"
+    "git-commit-msg-linter": "^5.0.8",
+    "lint-staged": "^15.2.5",
+    "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "husky": "^9.0.11"
   }
 }
