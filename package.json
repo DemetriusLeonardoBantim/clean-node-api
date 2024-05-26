@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --passWithNoTests --silent --noStackTrace",
-    "test:unit": "npm test -- --watch",
+    "test:unit": "npm test -- --watch -c jest-unit-config.js",
     "test:verbose": "jest --passWithNoTests",
     "test:staged": "jest --passWithNoTests",
     "prepare": "husky"
