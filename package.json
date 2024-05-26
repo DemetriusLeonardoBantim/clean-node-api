@@ -8,7 +8,8 @@
     "test:unit": "npm test -- --watch -c jest-unit-config.js",
     "test:integration": "npm test -- --watch -c jest-integration-config.js",
     "test:verbose": "jest --passWithNoTests",
-    "test:staged": "jest --passWithNoTests",
+    "test:staged": "npm test -- --watch --passWithNoTests",
+    "test:ci": "npm test -- --coverage",
     "prepare": "husky"
   },
   "keywords": [],
