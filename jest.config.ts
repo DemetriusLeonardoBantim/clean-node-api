@@ -2,6 +2,7 @@ import type { Config } from 'jest';
 
 const config: Config = {
   roots: ['<rootDir>/src'],
+  preset: '@shelf/jest-mongodb',
   transform: {
     '.+\\.ts$': 'ts-jest'
   },
