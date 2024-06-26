@@ -105,8 +105,7 @@ describe('LogController Decorator', () => {
             }
         }
 
-        const response = await sut.handle(httpRequest)
-
-        expect(response.body.name).toEqual('ServerError')
+        await sut.handle(httpRequest)
+        expect(logSpy).toHaveBeenCalledWith('any_stack')
     })
 })
