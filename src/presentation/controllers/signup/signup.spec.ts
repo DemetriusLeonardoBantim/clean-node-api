@@ -1,6 +1,7 @@
 import { AccountModel, AddAccount, AddAccountModel, EmailValidator, HttpRequest } from './signup-protocols'
 import { InvalidParamError, MissingParamError, ServerError } from '../../errors'
 import { SignUpController } from './signup'
+import { ok } from '../../helpers/http-helper'
 
 const makeEmailValidator = (): EmailValidator => {
     class EmailValidatorStub implements EmailValidator {
@@ -14,13 +15,7 @@ const makeEmailValidator = (): EmailValidator => {
 const makeAddAccount = (): AddAccount => {
     class AddAccountStub implements AddAccount {
         async add(account: AddAccountModel): Promise<AccountModel> {
-            const fakeAccount = {
-                id: 'valid_id',
-                name: 'valid_name',
-                email: 'valid_email@mail.com',
-                password: 'valid_password'
-            }
-            return new Promise(resolve => resolve(fakeAccount))
+            return new Promise(resolve => resolve(makeFakeAccount()))
         }
     }
     return new AddAccountStub()
@@ -37,6 +32,16 @@ const makeFakeRequest = ():HttpRequest => {
         }
     }
     return httpRequest
+}
+
+const makeFakeAccount = (): AccountModel => {
+    const fakeAccount = {
+        id: 'valid_id',
+        name: 'valid_name',
+        email: 'valid_email@mail.com',
+        password: 'valid_password'
+    }
+    return fakeAccount
 }
 
 interface SutTypes {
@@ -239,6 +244,7 @@ describe('SignUp Controller', () => {
 
         const httpResponse = await sut.handle(httpRequest)
         expect(httpResponse.statusCode).toBe(200)
+        expect(httpResponse).toEqual(ok(makeFakeAccount()))
         expect(httpResponse.body).toEqual({
             id: 'valid_id',
             name: 'valid_name',
