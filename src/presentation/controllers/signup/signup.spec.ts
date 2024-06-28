@@ -1,4 +1,4 @@
-import { AccountModel, AddAccount, AddAccountModel, EmailValidator } from './signup-protocols'
+import { AccountModel, AddAccount, AddAccountModel, EmailValidator, HttpRequest } from './signup-protocols'
 import { InvalidParamError, MissingParamError, ServerError } from '../../errors'
 import { SignUpController } from './signup'
 
@@ -26,6 +26,18 @@ const makeAddAccount = (): AddAccount => {
     return new AddAccountStub()
 }
 
+
+const makeFakeRequest = ():HttpRequest => {
+    const httpRequest = {
+        body: {
+            name: 'any_name',
+            email: 'invalid_email@mail.com',
+            password: 'any_password',
+            passwordConfirmation: 'any_password'
+        }
+    }
+    return httpRequest
+}
 
 interface SutTypes {
     sut: SignUpController
@@ -130,16 +142,8 @@ describe('SignUp Controller', () => {
         // System under test
         const { sut, emailValidatorStub } = makeSut()
         jest.spyOn(emailValidatorStub, 'isValid').mockReturnValueOnce(false)
-        const httpRequest = {
-            body: {
-                name: 'any_name',
-                email: 'invalid_email@mail.com',
-                password: 'any_password',
-                passwordConfirmation: 'any_password'
-            }
-        }
-
-        const httpResponse = await sut.handle(httpRequest)
+ 
+        const httpResponse = await sut.handle(makeFakeRequest())
         expect(httpResponse.statusCode).toBe(400)
         expect(httpResponse.body).toEqual(new InvalidParamError('email'))
     })
